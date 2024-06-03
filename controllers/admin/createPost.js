@@ -11,9 +11,6 @@ const createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position)
   }
-  if (req.file) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`
-  }
   const product = new Product(req.body); // tạo mới product
   await product.save(); // lưu vào trong database
   res.redirect(`${systemConfig.prefixAdmin}/products`)

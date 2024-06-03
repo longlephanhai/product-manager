@@ -4,8 +4,9 @@
 // }
 const express = require("express")
 const multer = require('multer')
-const storageMulter = require("../../helpers/storageMulter")
-const upload = multer({ storage: storageMulter() })
+
+// const storageMulter = require("../../helpers/storageMulter")
+const upload = multer()
 const systemConfig = require('../../config/system')
 const dashboard = require("../../controllers/admin/dashboard.controller")
 const productAdmin = require("../../controllers/admin/product.controller")
@@ -18,6 +19,7 @@ const validate = require("../../validates/admin/product.validate")
 const editProduct = require("../../controllers/admin/eidtProduct")
 const editProductPatch = require("../../controllers/admin/editProductPatch")
 const detail = require("../../controllers/admin/detail")
+const uploadClound = require("../../middlewares/admin/uploadClound")
 
 
 const routeradmin = express.Router()
@@ -29,15 +31,16 @@ routeradmin.patch(PATH_ADMIN + '/products/change-multi', changeMultiStatus)
 routeradmin.delete(PATH_ADMIN + "/products/delete/:id", deleteItem)
 routeradmin.get(PATH_ADMIN + "/products/create", addProduct)
 routeradmin.post(
-    PATH_ADMIN + "/products/create",
-    upload.single('thumbnail'),
-    validate,
-    createPost
+  PATH_ADMIN + "/products/create",
+  upload.single('thumbnail'),
+  uploadClound,
+  validate,
+  createPost
 )
 routeradmin.get(PATH_ADMIN + "/products/edit/:id", editProduct)
 routeradmin.patch(PATH_ADMIN + "/products/edit/:id",
-    upload.single('thumbnail'),
-    validate,
-    editProductPatch)
-routeradmin.get(PATH_ADMIN+"/products/detail/:id",detail)
+  upload.single('thumbnail'),
+  validate,
+  editProductPatch)
+routeradmin.get(PATH_ADMIN + "/products/detail/:id", detail)
 module.exports = routeradmin
