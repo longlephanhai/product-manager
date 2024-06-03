@@ -19,7 +19,7 @@ const validate = require("../../validates/admin/product.validate")
 const editProduct = require("../../controllers/admin/eidtProduct")
 const editProductPatch = require("../../controllers/admin/editProductPatch")
 const detail = require("../../controllers/admin/detail")
-const uploadClound = require("../../middlewares/admin/uploadClound")
+const uploadClound = require("../../middlewares/admib/uploadClound")
 
 
 const routeradmin = express.Router()
