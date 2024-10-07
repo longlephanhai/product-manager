@@ -3,17 +3,20 @@ const systemConfig = require("../../config/system")
 const createPost = async (req, res) => {
   try {
     req.body.price = parseInt(req.body.price)
-  req.body.discountPercentage = parseInt(req.body.discountPercentage)
-  req.body.stock = parseInt(req.body.stock)
-  if (req.body.position == "") {
-    const countProducts = await Product.countDocuments()
-    req.body.position = countProducts + 1;
-  } else {
-    req.body.position = parseInt(req.body.position)
-  }
-  const product = new Product(req.body); // tạo mới product
-  await product.save(); // lưu vào trong database
-  res.redirect(`${systemConfig.prefixAdmin}/products`)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+    if (req.body.position == "") {
+      const countProducts = await Product.countDocuments()
+      req.body.position = countProducts + 1;
+    } else {
+      req.body.position = parseInt(req.body.position)
+    }
+    req.body.createdBy = {
+      account_id: res.locals.user._id,
+    }
+    const product = new Product(req.body); // tạo mới product
+    await product.save(); // lưu vào trong database
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
   } catch (error) {
     console.log(error);
   }

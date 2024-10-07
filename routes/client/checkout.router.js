@@ -1,0 +1,16 @@
+const express = require("express")
+const category = require("../../middlewares/client/category.middlewares")
+const { cartId } = require("../../middlewares/client/cart.middlewares")
+const { index, order, success } = require("../../controllers/client/checkout.controller")
+const { infoUser } = require("../../middlewares/client/user.middlewares")
+const { settingGeneral } = require("../../middlewares/client/setting.middlewares")
+
+const routerCheckout = express.Router()
+routerCheckout.use(category)
+routerCheckout.use(cartId)
+routerCheckout.use(infoUser)
+routerCheckout.use(settingGeneral)
+routerCheckout.get("/",index)
+routerCheckout.post("/order",order)
+routerCheckout.get("/success/:orderId",success)
+module.exports = routerCheckout

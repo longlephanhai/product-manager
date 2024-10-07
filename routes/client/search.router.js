@@ -1,0 +1,13 @@
+const express = require("express")
+const { index } = require("../../controllers/client/search.controller")
+const { cartId } = require("../../middlewares/client/cart.middlewares")
+const category = require("../../middlewares/client/category.middlewares")
+const { infoUser } = require("../../middlewares/client/user.middlewares")
+const { settingGeneral } = require("../../middlewares/client/setting.middlewares")
+const routerSearch = express.Router()
+routerSearch.use(category)
+routerSearch.use(cartId)
+routerSearch.use(infoUser)
+routerSearch.use(settingGeneral)
+routerSearch.get('/search', index)
+module.exports = routerSearch
